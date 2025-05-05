@@ -1,3 +1,5 @@
 from gui import App
 
-App()
+a = App()
+er = a.er_c.get()
+
