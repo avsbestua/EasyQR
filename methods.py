@@ -26,7 +26,6 @@ def qr_code(self, error_cor):  # Qr code generator
 
 
 def generate(self):  # Qr code generator
-    print("work")
     eror_corect = self.er_c.get()
     if eror_corect:
         if eror_corect == '7%':

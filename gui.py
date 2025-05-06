@@ -15,7 +15,7 @@ class App:
                 root.geometry("800x520+400+150") #Setting up window
                 root['bg'] = 'snow'
                 root.title("EasyQR")
-
+                root.resizable(width=False, height=False)
 
                 tk.Label(root,
                         text="Welcome to EasyQR",
