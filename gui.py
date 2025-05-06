@@ -2,6 +2,7 @@ import tkinter as tk
 from tkinter import ttk
 import qrcode as qr
 from tkinter.messagebox import *
+from PIL import Image
 
 font = ("Segoe UI", 15)
 
@@ -57,14 +58,16 @@ class App:
 
                 m_btn.place(x=50, y=310)
 
-        def qr_code(self, error_cor):
+                self.box_size = ttk.Scale(from_= 1 ,to=20, )
+
+        def qr_code(self, error_cor): #Qr code generator
             data = self.inform.get()
             if data:
                 img = qr.make(data=data, error_correction=error_cor)
-                img.save("image.png")
+                img.save("qr.png")
             else: showerror("Error", "Please enter information to code")
 
-        def generate(self):
+        def generate(self):     #Qr code generator
             print("work")
             eror_corect = self.er_c.get()
             if eror_corect:
@@ -78,7 +81,9 @@ class App:
                     self.qr_code(qr.ERROR_CORRECT_H)
             else: showerror("Error", "Select error correction level")
 
-
+            showinfo("Save", "This QR-Code saved in app directory")
+            img = Image.open("qr.png")
+            img.show()
 
 if __name__ == "__main__":
     t = App()
