@@ -1,5 +1,7 @@
 import tkinter as tk
 from tkinter import ttk
+import qrcode as qr
+from tkinter.messagebox import *
 
 font = ("Segoe UI", 15)
 
@@ -10,8 +12,6 @@ class App:
                 root['bg'] = 'snow'
                 root.title("EasyQR")
 
-                style = ttk.Style()
-                style.theme_use('xpnative')
 
                 tk.Label(root,
                         text="Welcome to EasyQR",
@@ -47,6 +47,39 @@ class App:
                                       )
                 eror_cor['values'] = ("7%", "15%", "25%", "30%")
                 eror_cor.place(x=70, y=250)
-                tk.mainloop()
+
+                m_btn = tk.Button(root,
+                        text="Make QR-Code",
+                        bg='snow',
+                        font=font,
+                        command=self.generate,
+                        width=25)
+
+                m_btn.place(x=50, y=310)
+
+        def qr_code(self, error_cor):
+            data = self.inform.get()
+            if data:
+                img = qr.make(data=data, error_correction=error_cor)
+                img.save("image.png")
+            else: showerror("Error", "Please enter information to code")
+
+        def generate(self):
+            print("work")
+            eror_corect = self.er_c.get()
+            if eror_corect:
+                if eror_corect == '7%':
+                    self.qr_code(qr.ERROR_CORRECT_L)
+                elif eror_corect == '15%':
+                    self.qr_code(qr.ERROR_CORRECT_M)
+                elif eror_corect == '25%':
+                    self.qr_code(qr.ERROR_CORRECT_Q)
+                elif eror_corect == '30%':
+                    self.qr_code(qr.ERROR_CORRECT_H)
+            else: showerror("Error", "Select error correction level")
 
 
+
+if __name__ == "__main__":
+    t = App()
+    tk.mainloop()
