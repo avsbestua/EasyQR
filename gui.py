@@ -1,15 +1,26 @@
 import tkinter as tk
 from tkinter import ttk
-import qrcode as qr
+import qrcode
 from tkinter.messagebox import *
 from PIL import Image
+from tkinter import colorchooser
 
 font = ("Segoe UI", 15)
+
+
+def choose_color():
+    color = colorchooser.askcolor(title="Select color")
+    if color:
+        return color[0]
+    else:
+        showwarning("Color not selected", 'Color not selected, using default color')
+        return (255, 255, 255) #If user won`t select color, white will be used
+
 
 class App:
         def __init__(self):
                 root = tk.Tk()
-                root.geometry("800x500+400+150") #Setting up window
+                root.geometry("800x550+400+150") #Setting up window
                 root['bg'] = 'snow'
                 root.title("EasyQR")
 
@@ -56,38 +67,76 @@ class App:
                         command=self.generate,
                         width=25)
 
-                m_btn.place(x=350, y=410)
+                m_btn.place(x=350,
+                            y=410)
 
-                self.box_size = tk.Scale(root, from_= 1 ,to=21, bg='snow', tickinterval=5, orient=tk.HORIZONTAL, length=280)
-                self.box_size.place(x=50, y=300)
+                self.box_size = tk.Scale(root,
+                                         from_= 1,
+                                         to=21,
+                                         bg='snow',
+                                         tickinterval=5,
+                                         orient=tk.HORIZONTAL,
+                                         length=280)
+                self.box_size.place(x=50,
+                                    y=300)
 
-                tk.Label(root, text='Select box size', bg='snow', font=("Segoe UI", 18)).place(x=110, y=362)
+                tk.Label(root,
+                         text='Select box size',
+                         bg='snow',
+                         font=("Segoe UI",18)).place(x=110,
+                                                     y=362)
+
+                self.border_size = tk.Scale(root,   #border size scaler
+                                         from_=1,
+                                         to=26,
+                                         bg='snow',
+                                         tickinterval=5,
+                                         orient=tk.HORIZONTAL,
+                                         length=280)
+                self.border_size.place(x=50,
+                                    y=400)
+
+                tk.Label(root,
+                         text='Select border size',
+                         bg='snow',
+                         font=("Segoe UI", 18)).place(x=100,
+                                                      y=462)
 
         def qr_code(self, error_cor): #Qr code generator
             data = self.inform.get()
             if data:
-                img = qr.make(data=data, error_correction=error_cor, box_size=self.box_size.get())
-                img.save("qr.png")
+                qr = qrcode.QRCode(version= 1 ,error_correction=error_cor, box_size=self.box_size.get(), border=self.border_size.get())
+                qr.add_data(data)
+                qr.make()
+
+                image = qr.make_image(fill_color='black', back_color=choose_color())
+                image.save('qr.png')
+
+
             else: showerror("Error", "Please enter information to code")
+
+
 
         def generate(self):     #Qr code generator
             print("work")
             eror_corect = self.er_c.get()
             if eror_corect:
                 if eror_corect == '7%':
-                    self.qr_code(qr.ERROR_CORRECT_L)
+                    self.qr_code(qrcode.ERROR_CORRECT_L)
                 elif eror_corect == '15%':
-                    self.qr_code(qr.ERROR_CORRECT_M)
+                    self.qr_code(qrcode.ERROR_CORRECT_M)
                 elif eror_corect == '25%':
-                    self.qr_code(qr.ERROR_CORRECT_Q)
+                    self.qr_code(qrcode.ERROR_CORRECT_Q)
                 elif eror_corect == '30%':
-                    self.qr_code(qr.ERROR_CORRECT_H)
+                    self.qr_code(qrcode.ERROR_CORRECT_H)
+
+                img = Image.open("qr.png")
+                img.show()
+
             else: showerror("Error", "Select error correction level")
 
-            showinfo("Save", "This QR-Code saved in app directory")
-            img = Image.open("qr.png")
-            img.show()
 
-if __name__ == "__main__":
-    t = App()
-    tk.mainloop()
+
+
+t = App()
+tk.mainloop()
