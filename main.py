@@ -1,5 +1,6 @@
 import tkinter
 from gui import App
 
-App()
-tkinter.mainloop()
+if __name__ == "__main__":
+    App()
+    tkinter.mainloop()
