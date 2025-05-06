@@ -5,18 +5,13 @@ from tkinter.messagebox import *
 from PIL import Image
 from tkinter import colorchooser
 
-from matplotlib.testing import set_font_settings_for_testing
-
 font = ("Segoe UI", 15)
 
 
-def choose_color():
-    color = colorchooser.askcolor(title="Select color")
-    if color:
-        return color[0]
-    else:
-        showwarning("Color not selected", 'Color not selected, using default color')
-        return (255, 255, 255) #If user won`t select color, white will be used
+def choose_color(tittle):
+    color = colorchooser.askcolor(title=tittle)
+    return color[0]
+
 
 
 
@@ -115,6 +110,16 @@ class App:
                          font=("Segoe UI", 18)).place(x=100,
                                                       y=462)
 
+                tk.Label(root,
+                         text="Save as... .png",
+                         font=font,
+                         bg='snow').place(x=450, y=90)
+
+                self.name = ttk.Entry(font=font)
+                self.name.place(x=380, y=130)
+
+                self.name.insert(0, "qr")
+
         def qr_code(self, error_cor): #Qr code generator
             data = self.inform.get()
             if data:
@@ -122,10 +127,10 @@ class App:
                 qr.add_data(data)
                 qr.make()
 
-                image = qr.make_image(fill_color='black', back_color=choose_color())
-                image.save('qr.png')
+                image = qr.make_image(fill_color=choose_color("Fill color"), back_color=choose_color("Background color"))
+                image.save(f"{self.name.get()}png")
 
-                img = Image.open("qr.png")
+                img = Image.open(f"{self.name.get()}.png")
                 img.show()
 
             else: showerror("Error", "Please enter information to code")
