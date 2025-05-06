@@ -56,14 +56,17 @@ class App:
                         command=self.generate,
                         width=25)
 
-                m_btn.place(x=50, y=310)
+                m_btn.place(x=350, y=410)
 
-                self.box_size = ttk.Scale(from_= 1 ,to=20, )
+                self.box_size = tk.Scale(root, from_= 1 ,to=21, bg='snow', tickinterval=5, orient=tk.HORIZONTAL, length=280)
+                self.box_size.place(x=50, y=300)
+
+                tk.Label(root, text='Select box size', bg='snow', font=("Segoe UI", 18)).place(x=110, y=362)
 
         def qr_code(self, error_cor): #Qr code generator
             data = self.inform.get()
             if data:
-                img = qr.make(data=data, error_correction=error_cor)
+                img = qr.make(data=data, error_correction=error_cor, box_size=self.box_size.get())
                 img.save("qr.png")
             else: showerror("Error", "Please enter information to code")
 
