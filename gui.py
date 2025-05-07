@@ -110,4 +110,14 @@ class App:
                 self.name = ttk.Entry(font=font)
                 self.name.place(x=380, y=130)
 
-                self.name.insert(0, "qr")
+                self.name.insert(0, "qr") #Default Value for name entry
+
+
+                read_qr = tk.Button(root,
+                                    font=font,
+                                    bg='snow',
+                                    text="Read QR-Code",
+                                    command=methods.read)
+
+                read_qr.place(x=350, y=352)
+

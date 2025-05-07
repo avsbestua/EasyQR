@@ -1,7 +1,9 @@
 import qrcode
 from tkinter.messagebox import *
-from tkinter import colorchooser
+from tkinter import colorchooser, filedialog
 from PIL import Image
+from cv2 import imread
+from pyzbar.pyzbar import decode
 
 def choose_color(tittle):
     color = colorchooser.askcolor(title=tittle)
@@ -40,3 +42,16 @@ def generate(self):  # Qr code generator
 
     else:
         showerror("Error", "Select error correction level")
+
+def read():
+    path = filedialog.askopenfilename(title="Select QR-Code",
+                                      filetypes=[('Images', "*.png *.jpg *.bmp *.svg")])
+    file = imread(path)         #OpenCv imread for opening qr code
+    code = decode(file)
+
+    if code:
+        for c in code:
+            data = c.data.decode('utf-8')
+            showinfo("QR-Code reading", f"Information: {data}")
+
+    else: showerror("Error", "QR-Code not found")
