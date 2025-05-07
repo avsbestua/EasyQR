@@ -17,10 +17,17 @@ def qr_code(self, error_cor):  # Qr code generator
         qr.add_data(data)
         qr.make()
 
-        image = qr.make_image(fill_color=choose_color("Fill color"), back_color=choose_color("Background color"))
-        image.save(f"{self.name.get()}.png")
+        if self.color_select.get() == True:
+            code_color = choose_color("Code color")
+            back_color = choose_color("Background color")       #Checking flag "Select color manually"
+        else:
+            code_color = (0, 0, 0)
+            back_color = (255, 255, 255)
 
-        img = Image.open(f"{self.name.get()}.png")
+        image = qr.make_image(fill_color=code_color, back_color=back_color)
+        image.save(f"{self.name.get()}{self.formatsq.get()}")
+
+        img = Image.open(f"{self.name.get()}{self.formatsq.get()}")
         img.show()
 
     else:

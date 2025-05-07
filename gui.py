@@ -117,7 +117,27 @@ class App:
                                     font=font,
                                     bg='snow',
                                     text="Read QR-Code",
-                                    command=methods.read)
+                                    command=methods.read)     #QR-Code read button
 
                 read_qr.place(x=350, y=352)
 
+                self.formatsq = tk.StringVar()
+
+                format_select = ttk.Combobox(root,
+                                        textvariable=self.formatsq,
+                                        font=font,
+                                        state='readonly',
+                                        width=11,
+
+                                        )
+                format_select['values'] = (".png", ".jpg", ".bmp", ".svg")
+                format_select.place(x=350, y=310)
+                format_select.current(0)
+
+
+                self.color_select = tk.BooleanVar()
+                color_checkbox = tk.Checkbutton(root,
+                                                 variable=self.color_select,
+                                                 text="Select color manually?",
+                                                 bg='snow')
+                color_checkbox.place(x=125, y=195)
