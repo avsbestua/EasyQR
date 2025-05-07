@@ -1,45 +1,45 @@
 import tkinter as tk
 from tkinter import ttk
-from tkinter import colorchooser
 import methods
 
+leters = "BIPs"
+font = ("BIPs", 15)
 
-font = ("Segoe UI", 15)
-
-
+color = 'snow'
+font_col = 'black'
 
 
 class App:
         def __init__(self):
                 root = tk.Tk()
                 root.geometry("800x520+400+150") #Setting up window
-                root['bg'] = 'snow'
+                root['bg'] = color
                 root.title("EasyQR")
                 root.resizable(width=False, height=False)
 
                 tk.Label(root,
                         text="Welcome to EasyQR",
-                        font=("Segoe UI Bold", 20),
-                        bg='snow'
+                        font=(leters, 20),
+                        bg=color, fg=font_col
                         ).place(x=280, y=0)
 
                 self.inform = ttk.Entry(    #Entry for information to code (url, etc.)
                         root,
                         font=font
                         )
-                self.inform.place(x=80, y=160)
+                self.inform.place(x=50, y=160)
 
                 tk.Label(root,
                          text="Enter information for QR-Code\n(Url, etc.)",
-                         bg='snow',
-                         font=font
-                        ).place(x=62, y=90)
+                         bg=color,
+                         font=font, fg=font_col
+                        ).place(x=42, y=90)
 
                 tk.Label(root,
                          text="Select error corection level",
-                         bg='snow',
-                         font=font
-                        ).place(x=75, y=210)
+                         bg=color,
+                         font=font, fg=font_col
+                        ).place(x=55, y=210)
 
 
                 self.er_c = tk.StringVar()      #For ComboBox
@@ -47,18 +47,19 @@ class App:
                 eror_cor = ttk.Combobox(root,     #ComboBox for % of loose
                                       textvariable=self.er_c,
                                       font=font,
-                                      state='readonly'
+                                      state='readonly',
+                                      width=19
                                       )
                 eror_cor['values'] = ("7%", "15%", "25%", "30%")
-                eror_cor.place(x=70, y=250)
+                eror_cor.place(x=50, y=250)
                 eror_cor.set("7%")
 
 
                 m_btn = tk.Button(root,
                         text="Make QR-Code",
-                        bg='snow',
+                        bg=color,
                         font=font,
-                        command=lambda : methods.generate(self),
+                        command=lambda : methods.generate(self), fg=font_col,
                         width=25)
 
                 m_btn.place(x=350,
@@ -68,29 +69,33 @@ class App:
                 self.box_size = tk.Scale(root,
                                          from_= 1,
                                          to=21,
-                                         bg='snow',
+                                         bg=color,
                                          tickinterval=5,
                                          orient=tk.HORIZONTAL,
-                                         length=280)
+                                         length=280,
+                                         fg=font_col,
+                                         font=(leters, 8))
                 self.box_size.place(x=50,
-                                    y=300)
+                                    y=295)
 
                 self.box_size.set(10)
 
 
                 tk.Label(root,
                          text='Select box size',
-                         bg='snow',
-                         font=("Segoe UI",18)).place(x=110,
+                         bg=color, fg=font_col,
+                         font=(leters,18)).place(x=108,
                                                      y=362)
 
                 self.border_size = tk.Scale(root,   #border size scaler
                                          from_=1,
                                          to=26,
-                                         bg='snow',
+                                         bg=color,
                                          tickinterval=5,
                                          orient=tk.HORIZONTAL,
-                                         length=280)
+                                         length=280,
+                                         fg=font_col,
+                                         font=(leters, 8))
                 self.border_size.place(x=50,
                                     y=400)
 
@@ -98,14 +103,14 @@ class App:
 
                 tk.Label(root,
                          text='Select border size',
-                         bg='snow',
-                         font=("Segoe UI", 18)).place(x=100,
-                                                      y=462)
+                         bg=color, fg=font_col,
+                         font=(leters, 18)).place(x=100,
+                                                      y=467)
 
 
                 read_qr = tk.Button(root,
                                     font=font,
-                                    bg='snow',
+                                    bg=color, fg=font_col,
                                     text="Read QR-Code",
                                     command=methods.read)     #QR-Code read button
 
@@ -115,5 +120,6 @@ class App:
                 color_checkbox = tk.Checkbutton(root,
                                                  variable=self.color_select,
                                                  text="Select color manually?",
-                                                 bg='snow')
+                                                 bg=color, fg=font_col,
+                                                 font=(leters, 10))
                 color_checkbox.place(x=125, y=195)
