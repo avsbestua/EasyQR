@@ -1,8 +1,9 @@
+import webbrowser
+import numpy as np
 import qrcode
 from tkinter.messagebox import *
 from tkinter import colorchooser, filedialog
 from PIL import Image
-from cv2 import imread
 from pyzbar.pyzbar import decode
 
 def choose_color(tittle):
@@ -32,10 +33,6 @@ def qr_code(self, error_cor):  # Qr code generator
 
         image = qr.make_image(fill_color=code_color, back_color=back_color)
         image.save(path)
-
-        img = Image.open(path)
-        img.show()
-
     else:
         showerror("Error", "Please enter information to code")
 
@@ -59,12 +56,17 @@ def generate(self):  # Qr code generator
 def read():
     path = filedialog.askopenfilename(title="Select QR-Code",
                                       filetypes=[('Images', "*.png *.jpg *.bmp *.svg")])
-    file = imread(path)         #OpenCv imread for opening qr code
-    code = decode(file)
+    if path:
+        file = Image.open(path)
+        file = np.array(file)
+        code = decode(file)
 
-    if code:
-        for c in code:
-            data = c.data.decode('utf-8')
-            showinfo("QR-Code reading", f"Information: {data}")
-
-    else: showerror("Error", "QR-Code not found")
+        if code:
+            for c in code:
+                data = c.data.decode('utf-8')
+                if data.startswith("http://") or data.startswith("https://"):
+                    if askyesno("Link detected", f"Should open {data} in browser?"):  #Should open if link detected
+                        webbrowser.open(data)
+                else: showinfo("QR-Code reading", f"Information: {data}")
+        else: showerror("Error", "QR-Code not found")
+    else: showerror("Error", "Select image to read")
