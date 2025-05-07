@@ -102,16 +102,6 @@ class App:
                          font=("Segoe UI", 18)).place(x=100,
                                                       y=462)
 
-                tk.Label(root,
-                         text="Save as...",
-                         font=font,
-                         bg='snow').place(x=450, y=90)
-
-                self.name = ttk.Entry(font=font)
-                self.name.place(x=380, y=130)
-
-                self.name.insert(0, "qr") #Default Value for name entry
-
 
                 read_qr = tk.Button(root,
                                     font=font,
@@ -120,20 +110,6 @@ class App:
                                     command=methods.read)     #QR-Code read button
 
                 read_qr.place(x=350, y=352)
-
-                self.formatsq = tk.StringVar()
-
-                format_select = ttk.Combobox(root,
-                                        textvariable=self.formatsq,
-                                        font=font,
-                                        state='readonly',
-                                        width=11,
-
-                                        )
-                format_select['values'] = (".png", ".jpg", ".bmp", ".svg")
-                format_select.place(x=350, y=310)
-                format_select.current(0)
-
 
                 self.color_select = tk.BooleanVar()
                 color_checkbox = tk.Checkbutton(root,

@@ -24,10 +24,16 @@ def qr_code(self, error_cor):  # Qr code generator
             code_color = (0, 0, 0)
             back_color = (255, 255, 255)
 
-        image = qr.make_image(fill_color=code_color, back_color=back_color)
-        image.save(f"{self.name.get()}{self.formatsq.get()}")
+        path = filedialog.asksaveasfilename(title="Save as...",
+                                                defaultextension=".png",
+                                                filetypes=[("PNG", "*.png"), ('JPG', "*.jpg"), ('SVG', '*.svg'), ("BMP", "*.bmp")],
+                                            initialfile="qr_code") #Asking where save qr code
 
-        img = Image.open(f"{self.name.get()}{self.formatsq.get()}")
+
+        image = qr.make_image(fill_color=code_color, back_color=back_color)
+        image.save(path)
+
+        img = Image.open(path)
         img.show()
 
     else:
