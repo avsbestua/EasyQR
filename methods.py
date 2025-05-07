@@ -25,9 +25,9 @@ def qr_code(self, error_cor):  # Qr code generator
             back_color = (255, 255, 255)
 
         image = qr.make_image(fill_color=code_color, back_color=back_color)
-        image.save(f"{self.name.get()}{self.formatsq.get()}")
+        image.save(f"QR-Codes/{self.name.get()}{self.formatsq.get()}")
 
-        img = Image.open(f"{self.name.get()}{self.formatsq.get()}")
+        img = Image.open(f"QR-Codes/{self.name.get()}{self.formatsq.get()}")
         img.show()
 
     else:
