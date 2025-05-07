@@ -103,7 +103,7 @@ class App:
                                                       y=462)
 
                 tk.Label(root,
-                         text="Save as... .png",
+                         text="Save as...",
                          font=font,
                          bg='snow').place(x=450, y=90)
 
