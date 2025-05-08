@@ -1,15 +1,16 @@
 import webbrowser
 import numpy as np
-import qrcode
+import qrcode, io
 from tkinter.messagebox import *
 from tkinter import colorchooser, filedialog
-from PIL import Image
+from PIL import Image, ImageTk
 from pyzbar.pyzbar import decode
 
 def choose_color(tittle):
     color = colorchooser.askcolor(title=tittle)
     return color[0]
 
+image = None
 def qr_code(self, error_cor):  # Qr code generator
     data = self.inform.get()
     if data:
@@ -25,16 +26,30 @@ def qr_code(self, error_cor):  # Qr code generator
             code_color = (0, 0, 0)
             back_color = (255, 255, 255)
 
-        path = filedialog.asksaveasfilename(title="Save as...",
-                                                defaultextension=".png",
-                                                filetypes=[("PNG", "*.png"), ('JPG', "*.jpg"), ('SVG', '*.svg'), ("BMP", "*.bmp")],
-                                            initialfile="qr_code") #Asking where save qr code
-
+        global image #Making image global, because funtion save needs it
 
         image = qr.make_image(fill_color=code_color, back_color=back_color)
-        image.save(path)
+
+        img = image.resize((250, 250), Image.LANCZOS) #Size fo preview
+
+        tk_img = ImageTk.PhotoImage(img)
+
+        self.qr_label.config(image=tk_img)
+        self.qr_label.image = tk_img
+
     else:
         showerror("Error", "Please enter information to code")
+
+def save_qr():
+    if image:
+        path = filedialog.asksaveasfilename(title="Save as...",
+                                            defaultextension=".png",
+                                            filetypes=[("PNG", "*.png"), ('JPG', "*.jpg"), ('SVG', '*.svg'),
+                                                       ("BMP", "*.bmp")],
+                                            initialfile="qr_code")
+        image.save(path)
+
+    else: showerror("Error", "Please generate QR-Code before saving")
 
 
 def generate(self):  # Qr code generator
@@ -70,8 +85,8 @@ def read(self):
                 if data.startswith("http://") or data.startswith("https://"):
                     if askyesno("Link detected", f"Should open {data} in browser?"):  #Should open if link detected
                         webbrowser.open(data)
-            else:
-                if askyesno("QR-Code reading", f"Information: {data}, should copy into clipboard"):
-                    self.root.clipboard_append(data)
+                else:
+                    if askyesno("QR-Code reading", f"Information: {data}, should copy into clipboard"):
+                        self.root.clipboard_append(data)
         else: showerror("Error", "QR-Code not found")
     else: showerror("Error", "Select image to read")

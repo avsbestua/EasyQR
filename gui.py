@@ -1,6 +1,7 @@
 import tkinter as tk
 from tkinter import ttk
 import methods
+from PIL import ImageTk, Image
 
 leters = "BIPs"
 font = ("BIPs", 15)
@@ -60,7 +61,7 @@ class App:
                         bg=color,
                         font=font,
                         command=lambda : methods.generate(self), fg=font_col,
-                        width=25)
+                        width=26)
 
                 m_btn.place(x=350,
                             y=410)
@@ -116,6 +117,14 @@ class App:
 
                 read_qr.place(x=350, y=352)
 
+                save_qr = tk.Button(self.root,
+                                    font=font,
+                                    bg=color, fg=font_col,
+                                    text="Save QR-Code",
+                                    command=methods.save_qr)     #QR-Code save button
+
+                save_qr.place(x=510, y=352)
+
                 self.color_select = tk.BooleanVar()
                 color_checkbox = tk.Checkbutton(self.root,
                                                  variable=self.color_select,
@@ -123,3 +132,13 @@ class App:
                                                  bg=color, fg=font_col,
                                                  font=(leters, 10))
                 color_checkbox.place(x=125, y=195)
+
+
+                default_img = Image.open("pics/defim.png")  # Putting default image to qr_label
+                default_img = default_img.resize((250, 250),
+                                                 Image.LANCZOS)
+                self.default_tk_img = ImageTk.PhotoImage(default_img)
+
+
+                self.qr_label = tk.Label(self.root, image=self.default_tk_img) #Label for image
+                self.qr_label.place(x=380, y=70)
