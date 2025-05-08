@@ -53,6 +53,13 @@ def generate(self):  # Qr code generator
     else:
         showerror("Error", "Select error correction level")
 
+'''def on_file_drop(event):
+    file_path = event.data.strip().replace("{", "").replace("}", "")  
+    if not file_path.lower().endswith((".png", ".jpg", ".jpeg", '.bmp', '.svg')):
+        showerror("Error", "Please drag image")
+        return'''
+
+
 def read(self):
     path = filedialog.askopenfilename(title="Select QR-Code",
                                       filetypes=[('Images', "*.png *.jpg *.bmp *.svg")])
