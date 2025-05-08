@@ -53,7 +53,7 @@ def generate(self):  # Qr code generator
     else:
         showerror("Error", "Select error correction level")
 
-def read():
+def read(self):
     path = filedialog.askopenfilename(title="Select QR-Code",
                                       filetypes=[('Images', "*.png *.jpg *.bmp *.svg")])
     if path:
@@ -67,6 +67,8 @@ def read():
                 if data.startswith("http://") or data.startswith("https://"):
                     if askyesno("Link detected", f"Should open {data} in browser?"):  #Should open if link detected
                         webbrowser.open(data)
-                else: showinfo("QR-Code reading", f"Information: {data}")
+            else:
+                if askyesno("QR-Code reading", f"Information: {data}, should copy into clipboard"):
+                    self.root.clipboard_append(data)
         else: showerror("Error", "QR-Code not found")
     else: showerror("Error", "Select image to read")

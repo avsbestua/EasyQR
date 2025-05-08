@@ -11,31 +11,31 @@ font_col = 'black'
 
 class App:
         def __init__(self):
-                root = tk.Tk()
-                root.geometry("800x520+400+150") #Setting up window
-                root['bg'] = color
-                root.title("EasyQR")
-                root.resizable(width=False, height=False)
+                self.root = tk.Tk()
+                self.root.geometry("800x520+400+150") #Setting up window
+                self.root['bg'] = "snow"
+                self.root.title("EasyQR")
+                self.root.resizable(width=False, height=False)
 
-                tk.Label(root,
+                tk.Label(self.root,
                         text="Welcome to EasyQR",
                         font=(leters, 20),
                         bg=color, fg=font_col
                         ).place(x=280, y=0)
 
                 self.inform = ttk.Entry(    #Entry for information to code (url, etc.)
-                        root,
+                        self.root,
                         font=font
                         )
                 self.inform.place(x=50, y=160)
 
-                tk.Label(root,
+                tk.Label(self.root,
                          text="Enter information for QR-Code\n(Url, etc.)",
                          bg=color,
                          font=font, fg=font_col
                         ).place(x=42, y=90)
 
-                tk.Label(root,
+                tk.Label(self.root,
                          text="Select error corection level",
                          bg=color,
                          font=font, fg=font_col
@@ -44,7 +44,7 @@ class App:
 
                 self.er_c = tk.StringVar()      #For ComboBox
 
-                eror_cor = ttk.Combobox(root,     #ComboBox for % of loose
+                eror_cor = ttk.Combobox(self.root,     #ComboBox for % of loose
                                       textvariable=self.er_c,
                                       font=font,
                                       state='readonly',
@@ -55,7 +55,7 @@ class App:
                 eror_cor.set("7%")
 
 
-                m_btn = tk.Button(root,
+                m_btn = tk.Button(self.root,
                         text="Make QR-Code",
                         bg=color,
                         font=font,
@@ -66,7 +66,7 @@ class App:
                             y=410)
 
 
-                self.box_size = tk.Scale(root,
+                self.box_size = tk.Scale(self.root,
                                          from_= 1,
                                          to=21,
                                          bg=color,
@@ -81,13 +81,13 @@ class App:
                 self.box_size.set(10)
 
 
-                tk.Label(root,
+                tk.Label(self.root,
                          text='Select box size',
                          bg=color, fg=font_col,
                          font=(leters,18)).place(x=108,
                                                      y=362)
 
-                self.border_size = tk.Scale(root,   #border size scaler
+                self.border_size = tk.Scale(self.root,   #border size scaler
                                          from_=1,
                                          to=26,
                                          bg=color,
@@ -101,23 +101,23 @@ class App:
 
                 self.border_size.set(5)
 
-                tk.Label(root,
+                tk.Label(self.root,
                          text='Select border size',
                          bg=color, fg=font_col,
                          font=(leters, 18)).place(x=100,
                                                       y=467)
 
 
-                read_qr = tk.Button(root,
+                read_qr = tk.Button(self.root,
                                     font=font,
                                     bg=color, fg=font_col,
                                     text="Read QR-Code",
-                                    command=methods.read)     #QR-Code read button
+                                    command=lambda :methods.read(self))     #QR-Code read button
 
                 read_qr.place(x=350, y=352)
 
                 self.color_select = tk.BooleanVar()
-                color_checkbox = tk.Checkbutton(root,
+                color_checkbox = tk.Checkbutton(self.root,
                                                  variable=self.color_select,
                                                  text="Select color manually?",
                                                  bg=color, fg=font_col,
