@@ -3,8 +3,8 @@ from tkinter import ttk
 import methods
 from PIL import ImageTk, Image
 
-leters = "BIPs"
-font = ("BIPs", 15)
+leters = "Comic Sans MS"
+font = ("Comic Sans MS", 15)
 
 color = 'snow'
 font_col = 'black'
@@ -130,10 +130,11 @@ class App:
                                                  variable=self.color_select,
                                                  text="Select color manually?",
                                                  bg=color, fg=font_col,
-                                                 font=(leters, 10))
-                color_checkbox.place(x=125, y=195)
+                                                 font=(leters, 9))
+                color_checkbox.place(x=120, y=194)
 
 
+                #default_img = Image.open("_internal/pics/defim.png") #For exe packing
                 default_img = Image.open("pics/defim.png")  # Putting default image to qr_label
                 default_img = default_img.resize((250, 250),
                                                  Image.LANCZOS)
