@@ -1,4 +1,4 @@
-#EasyQR — Simple QR-code App
+# EasyQR — Simple QR-code App
 ![App](pics/main.png)
 
 ##Features 💡
@@ -11,7 +11,7 @@
 
 ![QR-code](pics/qr_code.png)
 
-##Instalation ⬇️
+## Instalation ⬇️
 ```
 git clone https://github.com/avsbestua/EasyQR.git
 cd EasyQR
