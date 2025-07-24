@@ -1,7 +1,7 @@
 # EasyQR — Simple QR-code App
 ![App](pics/main.png)
 
-##Features 💡
+## Features 💡
 - Generating QR-codes
 - Generating QR-codes with custom colours
 - Read QR-codes
