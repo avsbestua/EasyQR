@@ -45,7 +45,7 @@ class App:
 
                 self.er_c = tk.StringVar()      #For ComboBox
 
-                eror_cor = ttk.Combobox(self.root,     #ComboBox for % of loose
+                eror_cor = ttk.Combobox(self.root,
                                       textvariable=self.er_c,
                                       font=font,
                                       state='readonly',

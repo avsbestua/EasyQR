@@ -6,7 +6,7 @@ from tkinter import colorchooser, filedialog
 from PIL import Image, ImageTk
 from pyzbar.pyzbar import decode
 
-def choose_color(tittle):
+def choose_color(tittle): #choose color funtion
     color = colorchooser.askcolor(title=tittle)
     return color[0]
 
@@ -21,12 +21,12 @@ def qr_code(self, error_cor):  # Qr code generator
 
         if self.color_select.get() == True:
             code_color = choose_color("Code color")
-            back_color = choose_color("Background color")       #Checking flag "Select color manually"
+            back_color = choose_color("Background color")       #Checking flag "Select color manually?"
         else:
             code_color = (0, 0, 0)
             back_color = (255, 255, 255)
 
-        global image #Making image global, because funtion save needs it
+        global image
 
         image = qr.make_image(fill_color=code_color, back_color=back_color)
 
@@ -44,7 +44,7 @@ def save_qr():
     if image:
         path = filedialog.asksaveasfilename(title="Save as...",
                                             defaultextension=".png",
-                                            filetypes=[("PNG", "*.png"), ('JPG', "*.jpg"), ('SVG', '*.svg'),
+                                            filetypes=[("PNG", "*.png"), ('JPG', "*.jpg"),
                                                        ("BMP", "*.bmp")],
                                             initialfile="qr_code")
         image.save(path)
@@ -52,7 +52,7 @@ def save_qr():
     else: showerror("Error", "Please generate QR-Code before saving")
 
 
-def generate(self):  # Qr code generator
+def generate(self):  # Error correction
     eror_corect = self.er_c.get()
     if eror_corect:
         if eror_corect == '7%':
@@ -69,24 +69,37 @@ def generate(self):  # Qr code generator
         showerror("Error", "Select error correction level")
 
 
+def code_decode(code, self):
+    for c in code:
+        data = c.data.decode('utf-8')
+        if data.startswith("http://") or data.startswith("https://"):
+            if askyesno("Link detected", f"Should open {data} in browser?"):  # Should open if link detected?
+                webbrowser.open(data)
+        else:
+            if askyesno("QR-Code reading", f"Information: {data}, should copy into clipboard"):
+                self.root.clipboard_append(data)
+
 
 
 def read(self):
     path = filedialog.askopenfilename(title="Select QR-Code",
-                                      filetypes=[('Images', "*.png *.jpg *.bmp *.svg")])
+                                      filetypes=[('Images', "*.png *.jpg *.bmp")])
     if path:
         file = Image.open(path)
+        file_thrs = file.convert("L") #Convertation to gray-scale
+        file_thrs = file.point(lambda pix: 255 if pix > 100 else 0, mode="1")
+
         file = np.array(file)
         code = decode(file)
 
         if code:
-            for c in code:
-                data = c.data.decode('utf-8')
-                if data.startswith("http://") or data.startswith("https://"):
-                    if askyesno("Link detected", f"Should open {data} in browser?"):  #Should open if link detected
-                        webbrowser.open(data)
-                else:
-                    if askyesno("QR-Code reading", f"Information: {data}, should copy into clipboard"):
-                        self.root.clipboard_append(data)
-        else: showerror("Error", "QR-Code not found")
-    else: showerror("Error", "Select image to read")
+            code_decode(code, self)
+        else:
+            file_thrs = np.array(file_thrs)
+            code = decode(file_thrs)
+            if code:
+                code_decode(code, self)
+            else:
+                showerror("Error", "QR-Code not found")
+    else:
+        showerror("Error", "Select image to read")
