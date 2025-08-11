@@ -1,50 +1,101 @@
 @import url('https://fonts.googleapis.com/css2?family=Winky+Rough:ital,wght@0,300..900;1,300..900&display=swap');
 
 body{
-    background-color: #1F7D53;
-    font-family: 'Winky Rough', cursive;
+    background-color: #092635;
     color: #ffffff;
-    text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.9);
+    font-family: 'Winky Rough', cursive;
 }
 
-
-h1{
+#hero {
     display: flex;
-    justify-content: center;
+    flex-direction: row;
+    align-items: center;
     text-align: center;
+    font-size: 35px;
+    background-color: #1B4242;
+    border-radius: 20px;
 }
 
-h2{
-    display: flex;
-    justify-content: center;
-    text-align: center;
+#hero-text {
+    flex: 1;
+    text-shadow: 3px 5px 20px   rgba(0, 0, 0, 0.5);
 }
 
-img{
-    display: flex;
-    justify-content: center;
-    text-align: center;
-    margin: 0 auto;
-    border-radius: 10px;
-    box-shadow: 0 2px 30px rgba(0, 0, 0, 0.5);
+#hero img {
+    width: 40%;
+    margin: 20px 50px;
+    border-radius: 15px;
+    box-shadow: 0 0 80px rgba(0, 0, 0, 0.4);
 }
-
-img:hover{
+#hero img:hover {
     transform: scale(1.05);
-    transition: transform 0.3s ease;
+    transition: transform 0.5s ease;
 }
 
-h3{
-    display: flex;
-    justify-content: center;
-    text-align: center;
-    margin-top: 10px;
-    font-size: 200%;
+#features {
+    background-color: #1B4242;
+    border-radius: 20px;
+    width: 100%;
 }
 
-p{
-    display: flex;
-    justify-content: center;
+#features h2 {
     text-align: center;
+    margin: 10px 0;
+    font-size: 30px;
+}
+
+#features ul {
+    list-style-type: square;
+    padding-left: 40px;
+    padding-bottom: 20px;
+    margin-bottom: 10px;
+    font-size: 20px;
+}
+
+#features li{
+    font-weight: 550;
+    margin: 0px 0;
+}
+
+#download {
+    background-color: #1B4242;
+    border-radius: 20px;
     padding: 10px;
+    text-align: center;
+}
+
+#download h2 {
+    margin: 5px 0;
+}
+
+#download p {
+    text-align: center;
+}
+
+#download button {
+    background-color: #5C8374;
+    color: white;
+    border: 2px solid #9EC8B9;
+    border-radius: 5px;
+    padding: 10px 20px;
+    font-size: 25px;
+    cursor: pointer;
+}
+
+#download button:hover {
+    background-color: #93cdb9;
+    transform: scale(1.05);
+    transition: 0.4s ease;
+}
+
+@media (max-width: 768px) {
+    #hero {
+        flex-direction: column;
+        font-size: 17px;
+    }
+    #hero img {
+        width: 80%;
+        order: 1;
+    }
+    
 }
