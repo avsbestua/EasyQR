@@ -1,4 +1,0 @@
-numpy
-qrcode
-Pillow
-pyzbar
