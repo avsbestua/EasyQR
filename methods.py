@@ -106,7 +106,7 @@ def read(self=None, cam_mode=False, cap=None):
         code = decode(file)
 
         if code:
-            winsound.Beep(800, 350)
+            winsound.Beep(900, 350)
             code_decode(code, self)
 
 
@@ -121,6 +121,15 @@ def scan_qr():
             showerror("Error", "Please check your camera")
             break
 
+        cv2.putText(cap,
+                    "Press Q to exit",
+                    (10, 30),
+                    cv2.FONT_HERSHEY_SIMPLEX,
+                    1,
+                    (255, 255, 255),
+                    2,
+                    cv2.LINE_AA)
+        
         cv2.imshow("EasyQR", cap)
         read(cam_mode=True, cap=cap)
 
