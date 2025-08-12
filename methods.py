@@ -5,6 +5,7 @@ from tkinter.messagebox import *
 from tkinter import colorchooser, filedialog
 from PIL import Image, ImageTk
 from pyzbar.pyzbar import decode
+import cv2
 
 def choose_color(tittle): #choose color funtion
     color = colorchooser.askcolor(title=tittle)
@@ -86,8 +87,15 @@ def read(self):
                                       filetypes=[('Images', "*.png *.jpg *.bmp")])
     if path:
         file = Image.open(path)
-        file_thrs = file.convert("L") #Convertation to gray-scale
-        file_thrs = file.point(lambda pix: 255 if pix > 100 else 0, mode="1")
+
+        img_ocv = np.array(file.convert("L"))
+
+        # Автоматичне порогування (OTSU)
+        _, binary = cv2.threshold(
+            img_ocv, 0, 255,
+            cv2.THRESH_BINARY + cv2.THRESH_OTSU
+        )
+        file_thrs = Image.fromarray(binary)
 
         file = np.array(file)
         code = decode(file)
