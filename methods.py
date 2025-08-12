@@ -1,4 +1,6 @@
+import threading
 import webbrowser
+import winsound
 import numpy as np
 import qrcode, io
 from tkinter.messagebox import *
@@ -82,32 +84,48 @@ def code_decode(code, self):
 
 
 
-def read(self):
-    path = filedialog.askopenfilename(title="Select QR-Code",
-                                      filetypes=[('Images', "*.png *.jpg *.bmp")])
-    if path:
-        file = Image.open(path)
+def read(self=None, cam_mode=False, cap=None):
 
-        img_ocv = np.array(file.convert("L"))
+    if not cam_mode:
+        path = filedialog.askopenfilename(title="Select QR-Code",
+                                          filetypes=[('Images', "*.png *.jpg *.bmp")])
+        if path:
+            file = Image.open(path)
 
-        # Автоматичне порогування (OTSU)
-        _, binary = cv2.threshold(
-            img_ocv, 0, 255,
-            cv2.THRESH_BINARY + cv2.THRESH_OTSU
-        )
-        file_thrs = Image.fromarray(binary)
+            img_ocv = np.array(file.convert("L"))
 
-        file = np.array(file)
+            _, binary = cv2.threshold(
+                img_ocv, 0, 255,
+                cv2.THRESH_BINARY + cv2.THRESH_OTSU
+            )
+            file_thrs = Image.fromarray(binary)
+
+            file = np.array(file)
+    else:
+        file = Image.fromarray(cap)
         code = decode(file)
 
         if code:
+            winsound.Beep(800, 350)
             code_decode(code, self)
-        else:
-            file_thrs = np.array(file_thrs)
-            code = decode(file_thrs)
-            if code:
-                code_decode(code, self)
-            else:
-                showerror("Error", "QR-Code not found")
-    else:
-        showerror("Error", "Select image to read")
+
+
+def scan_qr():
+    showinfo("Info", "Please wait a few seconds, camera is starting. Press q to exit")
+
+    cam = cv2.VideoCapture(0) #You can write other camera index instead 0, usually 0 is main camera
+    while True:
+        ret, cap = cam.read()
+
+        if not ret:
+            showerror("Error", "Please check your camera")
+            break
+
+        cv2.imshow("EasyQR", cap)
+        read(cam_mode=True, cap=cap)
+
+        if cv2.waitKey(1) & 0xFF == ord('q'):
+            break
+
+def start_cam_thread():
+    threading.Thread(target=scan_qr, daemon=True).start()

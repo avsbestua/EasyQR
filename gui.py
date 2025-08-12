@@ -6,7 +6,6 @@ from PIL import ImageTk, Image
 
 class App:
         def __init__(self):
-
             cfg = {}
             with open('config.txt', 'r') as f:
                 for line in f:
@@ -78,7 +77,7 @@ class App:
                     width=26)
 
             m_btn.place(x=350,
-                        y=410)
+                        y=450)
 
 
             self.box_size = tk.Scale(self.root,
@@ -125,8 +124,9 @@ class App:
 
             read_qr = tk.Button(self.root,
                                 font=font,
+                                width=26,
                                 bg=color, fg=font_col,
-                                text="Read QR-Code",
+                                text="Read QR-Code from image",
                                 command=lambda :methods.read(self))     #QR-Code read button
 
             read_qr.place(x=350, y=352)
@@ -135,10 +135,18 @@ class App:
                                 font=font,
                                 bg=color, fg=font_col,
                                 text="Save QR-Code",
-                                command=methods.save_qr)     #QR-Code save button
+                                command=methods.save_qr,
+                                width=13)     #QR-Code save button
 
-            save_qr.place(x=510, y=352)
+            save_qr.place(x=350, y=402)
 
+            scan_qr = tk.Button(self.root,
+                                font=font,
+                                bg=color, fg=font_col,
+                                text="Scan QR-Code",
+                                command=methods.start_cam_thread)
+
+            scan_qr.place(x=519, y=402)
             self.color_select = tk.BooleanVar()
             color_checkbox = tk.Checkbutton(self.root,
                                              variable=self.color_select,
@@ -148,8 +156,8 @@ class App:
             color_checkbox.place(x=120, y=194)
 
 
-            #default_img = Image.open("_internal/pics/defim.png") #For exe packing
-            default_img = Image.open("pics/defim.png")  # Putting default image to qr_label
+            #default_img = Image.open("_internal/data/defim.png") #For exe packing
+            default_img = Image.open("data/defim.png")  # Putting default image to qr_label
             default_img = default_img.resize((250, 250),
                                              Image.LANCZOS)
             self.default_tk_img = ImageTk.PhotoImage(default_img)

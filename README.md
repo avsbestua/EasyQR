@@ -1,5 +1,5 @@
 # EasyQR — Simple QR-code App
-![App](pics/main.png)
+![App](data/main.png)
 
 ## Features 💡
 - Generating QR-codes
@@ -9,7 +9,7 @@
 - Easy to use
 - Size select
 
-![QR-code](pics/qr_code.png)
+![QR-code](data/qr_code.png)
 
 ## Instalation ⬇️
 ```
