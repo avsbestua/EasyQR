@@ -1,0 +1,2 @@
+theme:light
+font:Comic Sans MS

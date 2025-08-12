@@ -7,7 +7,7 @@ from PIL import Image, ImageTk
 from pyzbar.pyzbar import decode
 import cv2
 
-def choose_color(tittle): #choose color funtion
+def choose_color(tittle): #choose color function
     color = colorchooser.askcolor(title=tittle)
     return color[0]
 
