@@ -129,7 +129,7 @@ def scan_qr():
                     (255, 255, 255),
                     2,
                     cv2.LINE_AA)
-        
+
         cv2.imshow("EasyQR", cap)
         read(cam_mode=True, cap=cap)
 
