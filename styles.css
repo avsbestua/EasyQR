@@ -44,7 +44,22 @@ body{
     font-size: 30px;
 }
 
-#features ul {
+#features-planned {
+    padding: 5px;
+    background-color: #1B4242;
+    border-radius: 20px;
+    width: 100%; 
+    margin-bottom: 10px;
+}
+
+#features-planned h3 {
+    text-align: center;
+    margin: 10px 0;
+    font-size: 25px;
+}
+
+
+#features ul, #features-planned ul {
     list-style-type: square;
     padding-left: 40px;
     padding-bottom: 20px;
@@ -52,7 +67,7 @@ body{
     font-size: 20px;
 }
 
-#features li{
+#features li, #features-planned li {
     font-weight: 550;
     margin: 0px 0;
 }
