@@ -101,13 +101,15 @@ def read(self=None, cam_mode=False, cap=None):
             file_thrs = Image.fromarray(binary)
 
             file = np.array(file)
+
     else:
         file = Image.fromarray(cap)
-        code = decode(file)
 
-        if code:
-            winsound.Beep(900, 350)
-            code_decode(code, self)
+    code = decode(file)
+
+    if code:
+        winsound.Beep(900, 350)
+        code_decode(code, self)
 
 
 def scan_qr():
