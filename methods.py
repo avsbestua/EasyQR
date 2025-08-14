@@ -98,9 +98,8 @@ def read(self=None, cam_mode=False, cap=None):
                 img_ocv, 0, 255,
                 cv2.THRESH_BINARY + cv2.THRESH_OTSU
             )
-            file_thrs = Image.fromarray(binary)
 
-            file = np.array(file)
+            file = binary
 
     else:
         file = Image.fromarray(cap)
@@ -110,6 +109,8 @@ def read(self=None, cam_mode=False, cap=None):
     if code:
         winsound.Beep(900, 350)
         code_decode(code, self)
+    else:
+        showerror("Code not Found", "QR-Code not found on this image")
 
 
 def scan_qr():
