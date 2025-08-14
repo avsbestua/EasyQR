@@ -4,7 +4,7 @@ body{
     background-color: #092635;
     color: #ffffff;
     font-family: 'Winky Rough', cursive;
-    margin: 0;
+    margin: 10px;
 }
 
 #hero {
@@ -46,12 +46,12 @@ body{
 }
 
 #features-planned {
-    padding: 5px;
     background-color: #1B4242;
     border-radius: 20px;
     width: 100%; 
     margin-bottom: 10px;
     padding-right: 10px;
+    padding: 0;
 }
 
 #features-planned h3 {
